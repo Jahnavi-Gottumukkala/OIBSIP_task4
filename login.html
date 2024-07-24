@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #73D7FF;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color:#095373;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    form {
+      background-color: #CDF0FF;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="password"],
+    {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color:#004764;
+      color:#FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    #savedData {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registration Form</h1>
+  <form id="registrationForm">
+    <label for="name">Name:</label>
+    <input id="name" type="text" placeholder="enter name" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="enter email" required ><br><br>
+     <label for="password">password:</label>
+    <input type="password" id="password" placeholder="enter password" required><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" placeholder="enter date of birth" required><br><br>
+
+    <button type="button" id="submitBtn">Submit</button>
+  </form>
+
+  <div id="savedData">
+    <h2>Saved Data</h2>
+    <p>Name: <span id="savedName"></span></p>
+    <p>Email: <span id="savedEmail"></span></p>
+    <p>password: <span id="savedpassword"></span></p>
+    <p>Date of Birth: <span id="savedDob"></span></p>
+    
+  </div>
+
+  <script>
+    
+    window.onload = function () {
+      const savedName = localStorage.getItem('name');
+      const savedEmail = localStorage.getItem('email');
+      const savedDob = localStorage.getItem('dob');
+      const savedpassword = localStorage.getItem('password');
+
+      if (savedName && savedEmail && savedDob) {
+        document.getElementById('savedName').textContent = savedName;
+        document.getElementById('savedEmail').textContent = savedEmail;
+        document.getElementById('savedDob').textContent = savedDob;
+        document.getElementById('savedpassword').textContent = savedpassword;
+      }
+    };
+
+    document.getElementById('dob').addEventListener('change', function () {
+      const dob = new Date(this.value);
+      const today = new Date();
+      const minDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+      const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+      if (dob < minDate || dob > maxDate) {
+        alert('Date of birth must be between 18 and 55 years ago.');
+        this.value = ''; // Clear the input field
+      }
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function () {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const dob = document.getElementById('dob').value;
+      const password = document.getElementById('password').value;
+    
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('dob', dob);
+       localStorage.setItem('password', password);
+      
+      document.getElementById('savedName').textContent = name;
+      document.getElementById('savedEmail').textContent = email;
+      document.getElementById('savedDob').textContent = dob;
+      document.getElementById('savedpassword').textContent = password;
+      alert('Data saved successfully.');
+    });
+  </script>
+</body>
+</html>
